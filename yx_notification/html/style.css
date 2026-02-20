@@ -1,0 +1,162 @@
+/*
+    yx_notification 样式文件
+    现代极简黑白灰设计 - 毛玻璃效果
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: transparent;
+    overflow: hidden;
+    font-family: 'Segoe UI', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ========== 通知容器 ========== */
+#notification-container {
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    z-index: 9999;
+    max-width: 380px;
+    width: 380px;
+    pointer-events: none;
+}
+
+/* ========== 单条通知 ========== */
+.notification-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    overflow: hidden;
+    pointer-events: auto;
+    cursor: default;
+
+    /* 毛玻璃背景 */
+    background: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    /* 极细亮灰色边框 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* 柔和阴影 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+    /* 过渡 */
+    transition: opacity 0.2s ease;
+}
+
+/* 左侧类型指示条 */
+.notification-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--notify-color, #2196F3);
+    border-radius: 3px 0 0 3px;
+}
+
+/* ========== 图标区域 ========== */
+.notification-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--notify-color, #2196F3);
+    font-size: 16px;
+}
+
+/* ========== 内容区域 ========== */
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--notify-color, #2196F3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    opacity: 0.9;
+}
+
+.notification-message {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* ========== 底部进度条 ========== */
+.notification-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: var(--notify-color, #2196F3);
+    opacity: 0.6;
+    border-radius: 0 0 0 8px;
+    transition: width linear;
+}
+
+/* ========== 悬停效果 ========== */
+.notification-item:hover {
+    background: rgba(30, 30, 30, 0.92);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.notification-item:hover .notification-progress {
+    animation-play-state: paused !important;
+}
+
+/* ========== 动画速度覆盖 ========== */
+.animate__fast {
+    --animate-duration: 0.5s;
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 480px) {
+    #notification-container {
+        max-width: 300px;
+        width: 300px;
+        left: 10px;
+        bottom: 20px;
+    }
+
+    .notification-item {
+        padding: 10px 14px;
+        gap: 10px;
+    }
+
+    .notification-icon {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        font-size: 14px;
+    }
+
+    .notification-message {
+        font-size: 12px;
+    }
+}
+
