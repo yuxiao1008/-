@@ -1,45 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local activeZones = {}
 local zoneBlips = {}
-local whitelistedVehicleHashes = {}
-
--- 预计算白名单车辆的哈希值（优化性能）
-CreateThread(function()
-    for vehicleName, _ in pairs(Config.VehicleWhitelist) do
-        whitelistedVehicleHashes[GetHashKey(vehicleName)] = true
-    end
-end)
-
--- 检查车辆内是否有真实玩家（包括驾驶员和所有乘客）
-local function hasPlayerInVehicle(vehicle)
-    -- 检查驾驶座 (-1)
-    local driver = GetPedInVehicleSeat(vehicle, -1)
-    if driver ~= 0 and IsPedAPlayer(driver) then
-        return true
-    end
-    
-    -- 检查所有乘客座位
-    local maxPassengers = GetVehicleMaxNumberOfPassengers(vehicle)
-    for i = 0, maxPassengers - 1 do
-        local passenger = GetPedInVehicleSeat(vehicle, i)
-        if passenger ~= 0 and IsPedAPlayer(passenger) then
-            return true
-        end
-    end
-    
-    return false
-end
-
--- 检查车辆是否应该被保护（白名单车辆且有玩家在内）
-local function isVehicleWhitelisted(vehicle)
-    local model = GetEntityModel(vehicle)
-    -- 如果不是白名单车辆，不保护
-    if not whitelistedVehicleHashes[model] then
-        return false
-    end
-    -- 是白名单车辆，只有车内有真实玩家时才保护
-    return hasPlayerInVehicle(vehicle)
-end
 
 -- 创建区域标记
 local function createZoneBlip(zoneId, zone)
@@ -158,7 +119,7 @@ local function clearAreaVehicles()
     for _, zone in pairs(activeZones) do
         local vehicles = GetGamePool('CVehicle')
         for _, vehicle in ipairs(vehicles) do
-            if DoesEntityExist(vehicle) and not isVehicleWhitelisted(vehicle) then
+            if DoesEntityExist(vehicle) then
                 local vehicleCoords = GetEntityCoords(vehicle)
                 local distance = #(vector3(vehicleCoords.x, vehicleCoords.y, vehicleCoords.z) - vector3(zone.coords.x, zone.coords.y, zone.coords.z))
                 

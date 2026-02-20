@@ -39,7 +39,6 @@ Lang = {
         command_cancel_desc = '取消当前的道路封控状态'
     },
     
-    -- 英文语言包
     en = {
         -- 菜单相关
         menu_header = 'Road Control Settings',
@@ -69,8 +68,6 @@ Lang = {
         command_cancel_desc = 'Cancel current road control status'
     }
 }
-
--- 改进的翻译函数
 function GetText(key, ...)
     local currentLang = Config.Language or 'cn'
     if Lang[currentLang] and Lang[currentLang][key] then
@@ -86,7 +83,6 @@ function GetText(key, ...)
             return text
         end
     else
-        -- 如果当前语言没有找到，尝试中文
         if Lang.cn and Lang.cn[key] then
             local text = Lang.cn[key]
             if ... then
@@ -121,16 +117,6 @@ Config.PoliceJobs = {
     }
 }
 
--- 车辆白名单 - 当这些车辆内有真实玩家时不受封控影响
--- 注意：只有车内有真实玩家（驾驶员或乘客）时才会保护，纯NPC车辆会正常清理
--- 格式: ['车辆模型名'] = true
-Config.VehicleWhitelist = {
-    ['taxi'] = true,  -- 出租车（有玩家乘坐时不清理）
-    -- 可以添加更多车辆，例如:
-    -- ['ambulance'] = true,  -- 救护车
-    -- ['firetruk'] = true,   -- 消防车
-}
-
 -- 默认值
-Config.DefaultRadius = 100.0
-Config.DefaultDuration = 300  -- 5分钟 
+Config.DefaultRadius = 100.0 -- 默认半径（米）
+Config.DefaultDuration = 300  -- （秒）5分钟 

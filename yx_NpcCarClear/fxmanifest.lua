@@ -1,4 +1,3 @@
-shared_script '@jg-meac/shared_fg-obfuscated.lua'
 fx_version 'cerulean'
 game 'gta5'
 
@@ -11,14 +10,12 @@ dependencies {
     'ox_lib'
 }
 
--- 保留 config.lua 开源
 escrow_ignore {
     'config.lua'
 }
 
 shared_scripts {
     '@ox_lib/init.lua',
-	'@prism_uipack/init.lua',
     'config.lua'
 }
 

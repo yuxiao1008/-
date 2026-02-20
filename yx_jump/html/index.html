@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>跳脸杀</title>
+    <style>
+        body {
+            margin: 0;
+            background: transparent;
+            overflow: hidden;
+        }
+        #face {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover; /* 保证图片铺满且不变形 */
+            display: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <img id="face" src="face.png" />
+    <audio id="sound" src="sound.mp3"></audio>
+    <script>
+        window.addEventListener('message', function(event) {
+            if (event.data.action === "show") {
+                document.getElementById('face').style.display = 'block';
+                var audio = document.getElementById('sound');
+                audio.volume = 1.0; // 设置最大音量
+                audio.play();
+            }
+            if (event.data.action === "hide") {
+                document.getElementById('face').style.display = 'none';
+                // 声音继续播放，不做处理
+            }
+        });
+    </script>
+</body>
+</html> 
